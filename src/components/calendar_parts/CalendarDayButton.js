@@ -58,7 +58,6 @@ const DayCell = styled.button`
 `;
 
 function CalendarDayButton({children, ...rest}) {
-    console.log(rest);
     return (
       <DayCell {...rest}>
         <FlatButton

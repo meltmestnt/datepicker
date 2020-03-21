@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Calendar from './Calendar';
 import CustomDialogPickerUpper from './CustomDialogPickerUpper';
 import StyledMuiDialog from './StyledMuiDialog';
+import YearsList from './YearsList';
 export class CustomDatePickerDialog extends Component {
     state = {
         active: 'date'
@@ -13,16 +14,35 @@ export class CustomDatePickerDialog extends Component {
         this.props.closeDialog();
     }
     render() {
-        const {open, date, dateChange, defaultDate} = this.props;
+        const {open, date, dateChange, defaultDate, minYear, maxYear, applyDate} = this.props;
         const {active} = this.state;
         return (
           <StyledMuiDialog
             open={open}
             close={() => this.handleClose()}
+            applyDate={applyDate}
+            tab={active}
             autoScrollBodyContent={true}
           >
-            <CustomDialogPickerUpper changeTab={tab => this.changeTab(tab)} active={active} date={date}></CustomDialogPickerUpper>
-            <Calendar defaultDate={defaultDate} onDateChanged={dateChange} date={date}></Calendar>
+            <CustomDialogPickerUpper
+              changeTab={tab => this.changeTab(tab)}
+              active={active}
+              date={date}
+            ></CustomDialogPickerUpper>
+            {active === "date" ? (
+              <Calendar
+                defaultDate={defaultDate}
+                onDateChanged={dateChange}
+                date={date}
+              ></Calendar>
+            ) : (
+              <YearsList
+                onDateChanged={dateChange}
+                date={date}
+                minYear={minYear}
+                maxYear={maxYear}
+              ></YearsList>
+            )}
           </StyledMuiDialog>
         );
     }

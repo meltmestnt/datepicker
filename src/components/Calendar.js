@@ -20,15 +20,15 @@ import CalendarContainer from './calendar_parts/CalendarContainer';
 import CalendarHeader from './calendar_parts/CalendarHeader';
 import CalendarLeftArrow from "./calendar_parts/CalendarLeftArrow";
 import CalendarRightArrow from "./calendar_parts/CalendarRightArrow";
+import CalendarDayLabel from './calendar_parts/CalendarDayLabel';
 
 const FlexContainer = styled.div`
     width: 100%;
     display: flex;
-    padding: 8px 0px;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-
+    padding: 5px 0px;
 `
 
 export class Calendar extends Component {
@@ -36,17 +36,17 @@ export class Calendar extends Component {
            today: new Date(),
            ...this.stateFromDate(this.props)
          };
-         stateFromDate({date, defaultDate} = {}) {
+         stateFromDate({ date, defaultDate } = {}) {
            const { current: stateCurrent } = this.state || {};
-           
+
            const currentDate = date || stateCurrent || defaultDate;
            const calendarDate = currentDate || new Date();
            const [year, month] = getDateArray(calendarDate);
-           return { current: currentDate, month, year };
+           return { current: currentDate, month, year, propDate: date };
          }
          changeHandler = date => () => {
            const { onDateChanged } = this.props;
-           console.log(onDateChanged)
+           console.log(onDateChanged);
            typeof onDateChanged === "function" && onDateChanged(date);
          };
          getCalendarDates = () => {
@@ -179,20 +179,19 @@ export class Calendar extends Component {
            );
          };
          renderCalendarDate = (date, index) => {
-           const { current, month, year, today } = this.state;
+           const { current, month, year, today, propDate } = this.state;
            const thisDay = new Date(date);
            const monthFirstDay = new Date([year, month]);
 
-           
            const isToday = !!today && isSameDay(thisDay, today);
-           const isCurrent = !!current && isSameDay(thisDay, current);
+           const isCurrent = !!current && isSameDay(thisDay, propDate);
            const inMonth =
              !!(month && year) && isSameMonth(thisDay, monthFirstDay);
 
            const props = {
              index,
              inMonth,
-             
+
              onClick: this.gotoDate(thisDay),
              title: thisDay.toDateString()
            };
@@ -204,16 +203,33 @@ export class Calendar extends Component {
              : CalendarDate; */
 
            return (
-               <CalendarDayButton isToday={isToday} isCurrent={isCurrent} inMonth={inMonth} key={getDateISO(thisDay)} {...props}>
-                 {thisDay.getDate()}
-               </CalendarDayButton>
+             <CalendarDayButton
+               isToday={isToday}
+               isCurrent={isCurrent}
+               inMonth={inMonth}
+               key={getDateISO(thisDay)}
+               {...props}
+             >
+               {thisDay.getDate()}
+             </CalendarDayButton>
+           );
+         };
+         renderDayLabels = (day, index) => {
+           const daylabel = WEEK_DAYS[day].toUpperCase();
+           return (
+             <CalendarDayLabel key={daylabel} index={index}>
+               {daylabel}
+             </CalendarDayLabel>
            );
          };
          render() {
-           const { renderMonthAndYear } = this;
+           const { renderMonthAndYear, renderDayLabels } = this;
            return (
              <CalendarContainer>
                {renderMonthAndYear()}
+               <FlexContainer>
+                 {Object.keys(WEEK_DAYS).map(renderDayLabels)}
+               </FlexContainer>
                <div
                  style={{
                    display: "flex",

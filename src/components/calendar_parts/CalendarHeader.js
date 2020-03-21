@@ -4,6 +4,7 @@ const Header = styled.h6`
   font-size: 14px;
   font-weight: 500;
   color: #000;
+  cursor: default;
   text-align: center;
 `;
 function CalendarHeader({children}) {

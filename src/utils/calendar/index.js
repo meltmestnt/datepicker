@@ -38,6 +38,16 @@ export const getMonthName = date => {
   : null
 }
 
+export const validateMinYear = year => Number(year) && Number(year) > 1976 ? Number(year) : 1976
+
+export const validateMaxYear = year => Number(year) && Number(year) < 2100 ? Number(year) : 2099
+
+export const getYearsList = (min, max) => {
+  min = validateMinYear(min);
+  max = validateMaxYear(max);
+  return Array.from(Array(max + 1 - min)).map((item, i) => min + i)
+}
+
 export const isDate = date => {
   const isDate = Object.prototype.toString.call(date) === "[object Date]";
   const isValidDate = date && !Number.isNaN(+date);

@@ -6,7 +6,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
-padding: 8px;
+padding: 0px 8px;
 width: 100%;
 overflow: hidden;
 

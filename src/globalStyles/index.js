@@ -5,6 +5,10 @@ injectGlobal`
     font-family: 'Roboto', sans-serif;
     box-sizing: border-box;
   }
+  .custom-date-picker {
+    max-height: 434px !important;
+    height: 434px !important;
+  }
   * {
     padding: 0px;
     margin: 0px;
