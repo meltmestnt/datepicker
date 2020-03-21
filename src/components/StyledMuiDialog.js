@@ -13,12 +13,13 @@ function StyledMuiDialog({children, open, close, ...rest}) {
     return (
       <Dialog
         actions={actions}
+        actionsContainerStyle={{ border: "none" }}
         modal={false}
         open={open}
         onRequestClose={close}
         autoScrollBodyContent={true}
         bodyStyle={{ padding: "0px" }}
-        contentStyle={{ width: "400px" }}
+        contentStyle={{ width: "310px" }}
         {...rest}
       >
         {children}

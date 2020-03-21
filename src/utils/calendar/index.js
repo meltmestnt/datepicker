@@ -27,6 +27,17 @@ export const CALENDAR_WEEKS = 6;
 
 export const CALENDAR_MONTHS_30 = [4, 6, 9, 11];
 
+export const getWeekDay = date => {
+  return isDate(date) ?
+    Object.values(WEEK_DAYS).find((d,i) => i === date.getDay())
+  : null;
+}
+export const getMonthName = date => {
+  return isDate(date) ?
+    Object.values(CALENDAR_MONTHS).find((m,i) => i === date.getMonth())
+  : null
+}
+
 export const isDate = date => {
   const isDate = Object.prototype.toString.call(date) === "[object Date]";
   const isValidDate = date && !Number.isNaN(+date);

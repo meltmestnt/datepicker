@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { getDateArray } from "./../utils/calendar";
-const Container = styled.span`
+import { getDateArray, getWeekDay, getMonthName } from "./../utils/calendar";
+const Container = styled.div`
   width: 100%;
   height: auto;
   float: none;
@@ -21,7 +21,8 @@ const Year = styled.h6`
   font-size: 16px;
   font-weight: 500;
   line-height: 16px;
-  opacity: 0.7;
+  opacity: ${props => props.active ? '1' : '0.7'};
+  cursor: pointer;
 `;
 
 const PickedDate = styled.h3`
@@ -29,19 +30,29 @@ const PickedDate = styled.h3`
   line-height: 36px;
   margin: 0px;
   opacity: 1;
+  cursor: pointer;
   transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
   width: 100%;
+  opacity: ${props => (props.active ? "1" : "0.7")};
   font-weight: 500;
 `;
 
-function CustomDialogPickerUpper({ date }) {
+function CustomDialogPickerUpper({ date, active, changeTab }) {
   const calendarDate = date || new Date();
-  const [year, month] = getDateArray(calendarDate);
-
+  const [year, month, day] = getDateArray(calendarDate);
+    const weekDay = getWeekDay(calendarDate);
+    const monthName = getMonthName(calendarDate);
+    const handleTabs = ev => ev.target.dataset.active && changeTab(ev.target.dataset.active)
+    
   return (
-    <Container>
-      <Year>{year}</Year>
-      <PickedDate>{month}</PickedDate>
+    <Container onClick={handleTabs}>
+      <Year data-active="year" active={active === "year"}>
+        {year}
+      </Year>
+      <PickedDate
+        data-active="date"
+        active={active === "date"}
+      >{`${weekDay}, ${monthName} ${day}`}</PickedDate>
     </Container>
   );
 }

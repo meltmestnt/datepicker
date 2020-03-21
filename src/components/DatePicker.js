@@ -36,6 +36,7 @@ export class DatePicker extends Component {
         <CustomDatePickerDialog
           open={showDialog}
           date={date}
+          
           defaultDate={defaultDate}
           dateChange={date => this.changeDate(date)}
           closeDialog={() => this.closeDatePickerDialog()}

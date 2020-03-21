@@ -14,6 +14,23 @@ import calendar, {
   WEEK_DAYS,
   CALENDAR_MONTHS
 } from "./../utils/calendar";
+import styled from 'styled-components';
+import CalendarDayButton from './calendar_parts/CalendarDayButton';
+import CalendarContainer from './calendar_parts/CalendarContainer';
+import CalendarHeader from './calendar_parts/CalendarHeader';
+import CalendarLeftArrow from "./calendar_parts/CalendarLeftArrow";
+import CalendarRightArrow from "./calendar_parts/CalendarRightArrow";
+
+const FlexContainer = styled.div`
+    width: 100%;
+    display: flex;
+    padding: 8px 0px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+`
+
 export class Calendar extends Component {
          state = {
            today: new Date(),
@@ -62,7 +79,7 @@ export class Calendar extends Component {
            evt.preventDefault();
            !evt.shiftKey && (this.pressureShift = !evt.shiftKey && false);
          };
-         
+
          handlePressureKeydown = evt => {
            evt.preventDefault();
            evt.shiftKey && (this.pressureShift = true);
@@ -148,17 +165,17 @@ export class Calendar extends Component {
            const props = { onMouseUp: this.clearPressureTimer };
 
            return (
-             <div>
-               <button {...props} onMouseDown={this.handlePrevious}>
+             <FlexContainer>
+               <CalendarLeftArrow {...props} onMouseDown={this.handlePrevious}>
                  Left
-               </button>
-               <span>
+               </CalendarLeftArrow>
+               <CalendarHeader>
                  {monthname} {year}
-               </span>
-               <button {...props} onMouseDown={this.handleNext}>
+               </CalendarHeader>
+               <CalendarRightArrow {...props} onMouseDown={this.handleNext}>
                  Right
-               </button>
-             </div>
+               </CalendarRightArrow>
+             </FlexContainer>
            );
          };
          renderCalendarDate = (date, index) => {
@@ -167,9 +184,10 @@ export class Calendar extends Component {
            const monthFirstDay = new Date([year, month]);
 
            
+           const isToday = !!today && isSameDay(thisDay, today);
+           const isCurrent = !!current && isSameDay(thisDay, current);
            const inMonth =
              !!(month && year) && isSameMonth(thisDay, monthFirstDay);
-           
 
            const props = {
              index,
@@ -186,15 +204,15 @@ export class Calendar extends Component {
              : CalendarDate; */
 
            return (
-             <span style={{padding: '10px'}} key={getDateISO(thisDay)} {...props}>
-               {thisDay.getDate()}
-             </span>
+               <CalendarDayButton isToday={isToday} isCurrent={isCurrent} inMonth={inMonth} key={getDateISO(thisDay)} {...props}>
+                 {thisDay.getDate()}
+               </CalendarDayButton>
            );
          };
          render() {
            const { renderMonthAndYear } = this;
            return (
-             <div>
+             <CalendarContainer>
                {renderMonthAndYear()}
                <div
                  style={{
@@ -205,7 +223,7 @@ export class Calendar extends Component {
                >
                  {this.getCalendarDates().map(this.renderCalendarDate)}
                </div>
-             </div>
+             </CalendarContainer>
            );
          }
        }
