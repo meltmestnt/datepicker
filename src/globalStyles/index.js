@@ -9,6 +9,7 @@ injectGlobal`
     max-height: 434px !important;
     height: 434px !important;
   }
+  
   * {
     padding: 0px;
     margin: 0px;
