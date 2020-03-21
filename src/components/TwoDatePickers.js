@@ -13,11 +13,9 @@ export class TwoDatePickers extends Component {
           >
             <DatePicker
               inputLabel="Readiness date"
-              date={firstDate}
               confirmDate={date => this.setState({ firstDate: new Date(date) })}
             ></DatePicker>
             <DatePicker
-              date={secondDate}
               defaultDate={firstDate}
               inputLabel="Departure date"
               confirmDate={date =>

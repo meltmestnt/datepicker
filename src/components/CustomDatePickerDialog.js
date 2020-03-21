@@ -14,13 +14,14 @@ export class CustomDatePickerDialog extends Component {
         this.props.closeDialog();
     }
     render() {
-        const {open, date, dateChange, defaultDate, minYear, maxYear, applyDate} = this.props;
+        const {open, date, dateChange, defaultDate, minYear, maxYear, applyDate, clearDate} = this.props;
         const {active} = this.state;
         return (
           <StyledMuiDialog
             open={open}
             close={() => this.handleClose()}
             applyDate={applyDate}
+            clearDate={clearDate}
             tab={active}
             autoScrollBodyContent={true}
           >

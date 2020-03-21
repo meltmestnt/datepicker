@@ -37,8 +37,8 @@ export class Calendar extends Component {
            ...this.stateFromDate(this.props)
          };
          stateFromDate({ date, defaultDate } = {}) {
+             
            const { current: stateCurrent } = this.state || {};
-
            const currentDate = date || stateCurrent || defaultDate;
            const calendarDate = currentDate || new Date();
            const [year, month] = getDateArray(calendarDate);
@@ -46,7 +46,6 @@ export class Calendar extends Component {
          }
          changeHandler = date => () => {
            const { onDateChanged } = this.props;
-           console.log(onDateChanged);
            typeof onDateChanged === "function" && onDateChanged(date);
          };
          getCalendarDates = () => {

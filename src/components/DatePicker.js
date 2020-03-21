@@ -9,8 +9,9 @@ export class DatePicker extends Component {
   };
   componentWillUpdate(nextProps, nextState) {
     if (nextProps.date !== this.props.date) {
+
       this.setState({
-        date: this.props.date
+        date: nextProps.date
       });
     }
   }
@@ -21,17 +22,21 @@ export class DatePicker extends Component {
       this.setState({showDialog: true})
   }
   changeDate(date) {
-    console.log(date)
     this.setState({date: new Date(date)})
   }
+  clearDate() {
+    this.setState({date: null});
+  }
   render() {
+    
     const { inputLabel = "Pick date", defaultDate, minYear = '1976', maxYear = '2045', confirmDate } = this.props;
     const { date = null, showDialog } = this.state;
+    const value = this.props.date ? getDateArray(this.props.date).join('-')  : date ? getDateArray(date).join('-') : '';
     return (
       <div>
         <TextField
           onClick={ev => this.openDialog(ev)}
-          value={this.props.date ? getDateArray(this.props.date).join('-')  : ""}
+          value={value}
           hintText={inputLabel}
         />
         <CustomDatePickerDialog
@@ -43,6 +48,7 @@ export class DatePicker extends Component {
           applyDate={() => confirmDate(this.state.date)}
           dateChange={date => this.changeDate(date)}
           closeDialog={() => this.closeDatePickerDialog()}
+          clearDate={() => this.clearDate()}
         ></CustomDatePickerDialog>
       </div>
     );

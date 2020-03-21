@@ -33,7 +33,6 @@ class YearsList extends React.Component {
         const div = this.scrollRef;
         if (div) {
             const active = div.querySelector('.active');
-            console.log(active)
             active.scrollIntoView();
         }
     }
