@@ -9,7 +9,7 @@ export class TwoDatePickers extends Component {
         const {firstDate, secondDate} = this.state;
         return (
           <div
-            style={{ width: "100%", display: "flex", justifyContent: "center" }}
+            style={{ width: "100%", display: "flex", justifyContent: "space-around" }}
           >
             <DatePicker
               inputLabel="Readiness date"

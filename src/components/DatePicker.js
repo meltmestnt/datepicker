@@ -35,9 +35,10 @@ export class DatePicker extends Component {
     return (
       <div>
         <TextField
-          onClick={ev => this.openDialog(ev)}
+          
           value={value}
           hintText={inputLabel}
+          onClick={ev => this.openDialog(ev)}
         />
         <CustomDatePickerDialog
           open={showDialog}
